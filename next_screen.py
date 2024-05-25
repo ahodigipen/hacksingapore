@@ -27,11 +27,14 @@ values = account1_values
 dropdown_open = False
 
 # Function to draw the pie chart
-def draw_pie_chart(values, screen, colors, center, radius, animated=False, scroll_offset=0):
-    
+def draw_pie_chart(values, screen, colors, center, radius, outline_color, outline_thickness, animated=False, scroll_offset=0):
     inner_circle_radius = 70/100 * radius
     total_value = sum(values)
     start_angle = 0
+
+    # Draw outline
+    pygame.draw.circle(screen, outline_color, center, radius + outline_thickness, outline_thickness)
+
     for i, value in enumerate(values):
         angle = (value / total_value) * 360
         end_angle = start_angle + angle
@@ -42,7 +45,6 @@ def draw_pie_chart(values, screen, colors, center, radius, animated=False, scrol
                 current_end_angle += 2
                 pygame.draw.arc(screen, colors[i], (center[0] - radius, center[1] - radius + scroll_offset, radius * 2, radius * 2),
                                math.radians(start_angle), math.radians(current_end_angle), radius)
-                
                 
                 pygame.draw.circle(screen, WHITE, (center[0], center[1] + scroll_offset), inner_circle_radius)
                 
@@ -56,7 +58,7 @@ def draw_pie_chart(values, screen, colors, center, radius, animated=False, scrol
             pygame.draw.circle(screen, WHITE, (center[0], center[1] + scroll_offset), inner_circle_radius)
             start_angle = end_angle
 
-    # Draw smaller circle in the middle of the pie chart
+    
     
 
 def draw_back_button(screen):
@@ -162,12 +164,12 @@ def main():
         screen.fill(WHITE)
 
         if animated:
-            draw_pie_chart(values, screen, COLORS, center, radius, animated, scroll_offset)
+            draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2)
             animated = False
         else:
-            draw_pie_chart(values, screen, COLORS, center, radius, scroll_offset=scroll_offset)
+            draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2)
 
-        # Draw value text
+        # Draw value text 
         for i, value in enumerate(values):
             color = COLORS[i] if i != selected_index else BLACK
             text = pygame.font.SysFont(None, 36).render(str(value), True, color)
