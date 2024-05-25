@@ -43,8 +43,8 @@ def draw_pie_chart(values, screen, colors, center, radius, animated=False):
             start_angle = end_angle
 
 def draw_back_button(screen):
-    pygame.draw.polygon(screen, GRAY, [(10, 10), (30, 20), (10, 30)])
-    pygame.draw.line(screen, GRAY, (10, 20), (30, 20), 5)
+    pygame.draw.polygon(screen, GRAY, [(10, 20), (30, 10), (30, 30)])
+    pygame.draw.line(screen, GRAY, (50, 20), (30, 20), 5)
 
 def check_back_button_click(pos):
     return 10 <= pos[0] <= 30 and 10 <= pos[1] <= 30
