@@ -11,7 +11,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Demo Phone App")
 
 # Define colors
-WHITE = (255, 255, 255)
+WHITE = (240, 237, 229)
 DARK_GRAY = (169, 169, 169)
 LIGHT_GRAY = (211, 211, 211)
 

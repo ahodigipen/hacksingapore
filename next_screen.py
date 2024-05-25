@@ -12,13 +12,15 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Animated Pie Chart")
 
 # Define colors
-WHITE = (255, 255, 255)
+WHITE = (240, 237, 229)
 BLACK = (0, 0, 0)
 GRAY = (169, 169, 169)
-COLORS = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0)]
+
+PINK = (255,192,203)
+COLORS = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), PINK]
 
 # Pie chart values
-values = [30, 60, 90, 180]
+values = [69, 10, 90, 180, 30]
 
 # Function to draw the pie chart
 def draw_pie_chart(values, screen, colors, center, radius, animated=False):
