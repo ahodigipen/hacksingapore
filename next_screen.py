@@ -94,6 +94,45 @@ def draw_balance_circle(screen, center, radius, color, outline_color, outline_th
     # Draw inner circle to create the donut effect
     pygame.draw.circle(screen, WHITE, center, inner_circle_radius)
 
+# Function to draw the back button
+# def draw_back_button(screen):
+#     pygame.draw.polygon(screen, GRAY, [(10, 20), (30, 10), (30, 30)])
+#     pygame.draw.line(screen, GRAY, (50, 20), (30, 20), 5)
+
+# Function to check if the back button was clicked
+# def check_back_button_click(pos):
+#     return 10 <= pos[0] <= 30 and 10 <= pos[1] <= 30
+
+# Function to draw the dropdown
+# def draw_dropdown(screen, dropdown_rect, dropdown_open, options):
+#     # Draw the dropdown button
+#     pygame.draw.rect(screen, LIGHT_GRAY, dropdown_rect)
+#     text = pygame.font.SysFont(None, 36).render("Balances", True, BLACK)
+#     screen.blit(text, text.get_rect(center=dropdown_rect.center))
+
+#     # If the dropdown is open, draw the options
+#     if dropdown_open:
+#         for i, option in enumerate(options):
+#             option_rect = pygame.Rect(dropdown_rect.x, dropdown_rect.y + (i + 1) * dropdown_rect.height, dropdown_rect.width, dropdown_rect.height)
+#             pygame.draw.rect(screen, LIGHT_GRAY, option_rect)
+#             option_text = pygame.font.SysFont(None, 36).render(option, True, BLACK)
+#             screen.blit(option_text, option_text.get_rect(center=option_rect.center))
+
+# Function to check if the dropdown or its options were clicked
+# def check_dropdown_click(pos, dropdown_rect, dropdown_open, options):
+#     # Check if the main dropdown button was clicked
+#     if dropdown_rect.collidepoint(pos):
+#         return "toggle"
+
+#     # Check if any of the options were clicked
+#     if dropdown_open:
+#         for i, option in enumerate(options):
+#             option_rect = pygame.Rect(dropdown_rect.x, dropdown_rect.y + (i + 1) * dropdown_rect.height, dropdown_rect.width, dropdown_rect.height)
+#             if option_rect.collidepoint(pos):
+#                 return option
+
+#     return None
+
 # Function to draw the "For You" and "Create" boxes
 def draw_boxes(screen):
     # Define box dimensions
@@ -110,7 +149,7 @@ def draw_boxes(screen):
     pygame.draw.rect(screen, LIGHT_GRAY, box2_rect)
 
     # Add labels
-    font = pygame.font.SysFont(None, 36)
+    font = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE)
     label1 = font.render("For You", True, BLACK)
     label2 = font.render("Create", True, BLACK)
     screen.blit(label1, label1.get_rect(center=box1_rect.center))
@@ -120,7 +159,7 @@ def draw_boxes(screen):
 
 # Function to draw the warning text
 def draw_warning_text(screen):
-    font = pygame.font.SysFont(None, 40)
+    font = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE)
     warning_text1 = font.render("Your money is losing value!", True, BLACK)
     warning_text2 = font.render("Protect your future now", True, BLACK)
 
@@ -151,6 +190,12 @@ def draw_navigation_bar(screen, tab_rects, tab_texts, active_tab):
 
 def main():
     global values, show_expenditure
+
+     # Load the background image
+    background_image = pygame.image.load("img/background-1.jpg")  # Replace "background_image.jpg" with the path to your image
+    # Set background image
+    screen.blit(background_image, (0, 0))
+
 
     center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 3)
     radius = 100
@@ -205,7 +250,6 @@ def main():
                     import for_you
                     for_you.main()
 
-        screen.fill(WHITE)
 
         # Draw navigation bar
         draw_navigation_bar(screen, tab_rects, tab_texts, active_tab)

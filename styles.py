@@ -13,20 +13,23 @@ class Styles:
     # Fonts
     DEFAULT_FONT = "Product Sans Regular.ttf"  # Use None for system default font
     BUTTON_FONT_SIZE = 15
-    TEXTBOX_FONT_SIZE = 15
+    TEXTBOX_FONT_SIZE = 20
     PLACEHOLDER_FONT_SIZE = 15
+    TITLE_FONT_SIZE = 30
     PROMPT_FONT_SIZE = 12
 
     # Sizes
     BUTTON_WIDTH = 350
     BUTTON_HEIGHT = 50
     TEXTBOX_WIDTH = 350
+    TEXTBOX_WIDTH_LARGE = 400
+    TEXTBOX_HEIGHT_LARGE = 100
     TEXTBOX_HEIGHT = 40
     TOGGLE_BUTTON_WIDTH = 35
     TOGGLE_BUTTON_HEIGHT = 40
 
     # Border radius
-    BORDER_RADIUS = 2
+    BORDER_RADIUS = 20
 
     # Padding
     TEXTBOX_PADDING = 15
