@@ -24,36 +24,39 @@ text_rect = text.get_rect(center=(screen_width / 2, screen_height / 2 - 50))
 
 # Define the button
 button_text = font.render("Go to Next Screen", True, DARK_GRAY)
-button_rect = pygame.Rect(50, screen_height / 2 + 50, 200, 50)
+button_rect = pygame.Rect(50, screen_height / 2 + 50, 350, 50)  # Adjusted button width to fit text
 button_color = LIGHT_GRAY
 
-# Main loop
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if button_rect.collidepoint(event.pos):
-                # Button clicked, run the next screen code
-                import next_screen
-                next_screen.main()
+def main():
+    # Main loop
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 running = False
 
-    # Clear the screen
-    screen.fill(WHITE)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button_rect.collidepoint(event.pos):
+                    # Button clicked, run the next screen code
+                    import next_screen
+                    next_screen.main()
+                    running = False
 
-    # Draw the text
-    screen.blit(text, text_rect)
+        # Clear the screen
+        screen.fill(WHITE)
 
-    # Draw the button
-    pygame.draw.rect(screen, button_color, button_rect)
-    screen.blit(button_text, button_text.get_rect(center=button_rect.center))
+        # Draw the text
+        screen.blit(text, text_rect)
 
-    # Update the display
-    pygame.display.flip()
+        # Draw the button
+        pygame.draw.rect(screen, button_color, button_rect)
+        screen.blit(button_text, button_text.get_rect(center=button_rect.center))
 
-# Clean up
-pygame.quit()
-sys.exit()
+        # Update the display
+        pygame.display.flip()
+
+    pygame.quit()
+    sys.exit()
+
+if __name__ == "__main__":
+    main()
