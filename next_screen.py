@@ -47,6 +47,9 @@ def draw_pie_chart(values, screen, colors, center, radius, outline_color, outlin
 
         start_angle = end_angle
 
+
+    #Draw inner circle outline
+    pygame.draw.circle(screen, outline_color, center, inner_circle_radius + outline_thickness, outline_thickness)
     # Draw inner circle to create the donut effect
     pygame.draw.circle(screen, WHITE, (center[0], center[1] + scroll_offset), inner_circle_radius)
 
