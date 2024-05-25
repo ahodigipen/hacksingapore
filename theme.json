@@ -1,0 +1,72 @@
+{
+    "pygame_gui": {
+        "default_font": "Arial",
+        "normal_text": {
+            "colours": {
+                "normal_text": "#000000"
+            }
+        }
+    },
+    "UIElement": {
+        "colours": {
+            "normal_bg": "#FFFFFF",
+            "hovered_bg": "#DDDDDD",
+            "disabled_bg": "#888888",
+            "normal_border": "#000000",
+            "hovered_border": "#888888",
+            "disabled_border": "#555555"
+        },
+        "font": {
+            "name": "Arial",
+            "size": 14
+        },
+        "shape": "rectangle",
+        "border_width": 1,
+        "shadow_width": 2,
+        "border_radius": 4
+    },
+    "UIButton": {
+        "colours": {
+            "normal_bg": "#666666",
+            "hovered_bg": "#999999",
+            "disabled_bg": "#444444",
+            "normal_text": "#FFFFFF",
+            "hovered_text": "#FFFFFF",
+            "disabled_text": "#AAAAAA"
+        },
+        "font": {
+            "name": "Arial",
+            "size": 24
+        },
+        "shape": "rounded_rectangle",
+        "border_width": 0,
+        "shadow_width": 1,
+        "border_radius": 8
+    },
+    "UITextEntryLine": {
+        "colours": {
+            "normal_bg": "#FFFFFF",
+            "hovered_bg": "#FFFFFF",
+            "disabled_bg": "#DDDDDD",
+            "normal_border": "#AAAAAA",
+            "hovered_border": "#888888",
+            "disabled_border": "#BBBBBB",
+            "active_border": "#000000",
+            "normal_text": "#000000",
+            "hovered_text": "#000000",
+            "disabled_text": "#555555",
+            "active_text": "#000000",
+            "selected_text": "#FFFFFF",
+            "selected_bg": "#000000",
+            "caret": "#000000"
+        },
+        "font": {
+            "name": "Arial",
+            "size": 24
+        },
+        "shape": "rectangle",
+        "border_width": 1,
+        "shadow_width": 0,
+        "border_radius": 4
+    }
+}
