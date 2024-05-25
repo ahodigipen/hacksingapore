@@ -6,14 +6,15 @@ import math
 pygame.init()
 
 # Set up the display
-screen_width = 300
-screen_height = 600
+screen_width = 450
+screen_height = 900
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Animated Pie Chart")
 
 # Define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+GRAY = (169, 169, 169)
 COLORS = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0)]
 
 # Pie chart values
@@ -41,6 +42,13 @@ def draw_pie_chart(values, screen, colors, center, radius, animated=False):
                            math.radians(start_angle), math.radians(end_angle), radius)
             start_angle = end_angle
 
+def draw_back_button(screen):
+    pygame.draw.polygon(screen, GRAY, [(10, 10), (30, 20), (10, 30)])
+    pygame.draw.line(screen, GRAY, (10, 20), (30, 20), 5)
+
+def check_back_button_click(pos):
+    return 10 <= pos[0] <= 30 and 10 <= pos[1] <= 30
+
 def main():
     center = (screen_width // 2, screen_height // 2)
     radius = 200
@@ -64,6 +72,13 @@ def main():
                 if event.key == pygame.K_TAB:
                     selected_index = (selected_index + 1) % len(values) if selected_index is not None else 0
 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if check_back_button_click(event.pos):
+                    # Back button clicked, go back to main.py
+                    import main  # Assuming main.py is your main script
+                    main.main()
+                    running = False
+
         screen.fill(WHITE)
 
         if animated:
@@ -78,6 +93,9 @@ def main():
             text = pygame.font.SysFont(None, 36).render(str(value), True, color)
             text_rect = text.get_rect(center=(center[0], center[1] + radius + 20 * (i + 1)))
             screen.blit(text, text_rect)
+
+        # Draw back button
+        draw_back_button(screen)
 
         pygame.display.flip()
 
