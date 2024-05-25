@@ -148,7 +148,7 @@ def main():
                     dropdown_open = False
                 elif action == "Account 2":
                     if values != account2_values:
-                        animated = True:
+                        animated = True
                         values = account2_values
                     dropdown_open = False
 
