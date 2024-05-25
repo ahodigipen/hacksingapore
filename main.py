@@ -32,7 +32,7 @@ TEXTBOX_PADDING = Styles.TEXTBOX_PADDING
 # Define the button
 button_text = pygame.font.Font(DEFAULT_FONT, BUTTON_FONT_SIZE).render("LOGIN", True, WHITE)
 button_rect = pygame.Rect(50, config.SCREEN_HEIGHT / 2 + 50, BUTTON_WIDTH, BUTTON_HEIGHT)
-button_color = DARK_GRAY
+button_color = RED
 
 # Define textboxes
 textbox1_rect = pygame.Rect(50, config.SCREEN_HEIGHT / 2 - 150, TEXTBOX_WIDTH, TEXTBOX_HEIGHT)
@@ -157,18 +157,15 @@ def main():
                         elif active_textbox == "textbox2":
                             textbox2_text += event.unicode
 
-        # Clear the screen
-        screen.fill(WHITE)
-
         # Draw the button
         pygame.draw.rect(screen, button_color, button_rect, border_radius=BORDER_RADIUS)
         screen.blit(button_text, button_text.get_rect(center=button_rect.center))
 
        
         # Draw textboxes
-        pygame.draw.rect(screen, LIGHT_GRAY, textbox1_rect, border_radius=BORDER_RADIUS)
-        pygame.draw.rect(screen, LIGHT_GRAY, textbox2_rect, border_radius=BORDER_RADIUS)
-        pygame.draw.rect(screen, LIGHT_GRAY, toggle_button_rect, border_radius=BORDER_RADIUS)
+        pygame.draw.rect(screen, WHITE, textbox1_rect, border_radius=BORDER_RADIUS)
+        pygame.draw.rect(screen, WHITE, textbox2_rect, border_radius=BORDER_RADIUS)
+        pygame.draw.rect(screen, WHITE, toggle_button_rect, border_radius=BORDER_RADIUS)
 
         # Draw border around active textbox
         if active_textbox == "textbox1":
@@ -178,15 +175,15 @@ def main():
 
         # Draw placeholder text if textboxes are empty
         if not textbox1_text:
-            placeholder1_surface = pygame.font.Font(DEFAULT_FONT, PLACEHOLDER_FONT_SIZE).render("USERNAME", True, BLACK)
+            placeholder1_surface = pygame.font.Font(DEFAULT_FONT, PLACEHOLDER_FONT_SIZE).render("USERNAME", True, DARK_GRAY)
             screen.blit(placeholder1_surface, (textbox1_rect.x + TEXTBOX_PADDING, textbox1_rect.y + TEXTBOX_HEIGHT // 2 - PLACEHOLDER_FONT_SIZE // 2))
         if not textbox2_text:
-            placeholder2_surface = pygame.font.Font(DEFAULT_FONT, PLACEHOLDER_FONT_SIZE).render("PASSWORD", True, BLACK)
+            placeholder2_surface = pygame.font.Font(DEFAULT_FONT, PLACEHOLDER_FONT_SIZE).render("PASSWORD", True, DARK_GRAY)
             screen.blit(placeholder2_surface, (textbox2_rect.x + TEXTBOX_PADDING, textbox2_rect.y + TEXTBOX_HEIGHT // 2 - PLACEHOLDER_FONT_SIZE // 2))
 
         # Render and blit the input text
-        textbox1_surface = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE).render(textbox1_text, True, BLACK)
-        textbox2_surface = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE).render("*" * len(textbox2_text) if hidden_password else textbox2_text, True, BLACK)
+        textbox1_surface = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE).render(textbox1_text, True, DARK_GRAY)
+        textbox2_surface = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE).render("*" * len(textbox2_text) if hidden_password else textbox2_text, True, DARK_GRAY)
         screen.blit(textbox1_surface, (textbox1_rect.x + TEXTBOX_PADDING, textbox1_rect.y + TEXTBOX_HEIGHT // 2 - TEXTBOX_FONT_SIZE // 2))
         screen.blit(textbox2_surface, (textbox2_rect.x + TEXTBOX_PADDING, textbox2_rect.y + TEXTBOX_HEIGHT // 2 - TEXTBOX_FONT_SIZE // 2))
 
@@ -201,11 +198,11 @@ def main():
             screen.blit(prompt_text, prompt_rect)
 
         # Draw text and underline "PIN"
-        forgot_pin_text = pygame.font.Font(DEFAULT_FONT, PROMPT_FONT_SIZE).render("Forgot your ", True, BLACK)
-        pin_text = pygame.font.Font(DEFAULT_FONT, PROMPT_FONT_SIZE).render("PIN", True, BLACK)
+        forgot_pin_text = pygame.font.Font(DEFAULT_FONT, PROMPT_FONT_SIZE).render("Forgot your ", True, WHITE)
+        pin_text = pygame.font.Font(DEFAULT_FONT, PROMPT_FONT_SIZE).render("PIN", True, WHITE)
         pin_text_width = forgot_pin_text.get_width() + pin_text.get_width()  # Total width of "Forgot your PIN"
         pin_underline_rect = pygame.Rect(50 + forgot_pin_text.get_width(), textbox2_rect.bottom + 20 + 13, pin_text.get_width(), 2)  # Underline rectangle
-        pygame.draw.rect(screen, BLACK, pin_underline_rect)  # Draw underline
+        pygame.draw.rect(screen, WHITE, pin_underline_rect)  # Draw underline
         screen.blit(forgot_pin_text, (50, textbox2_rect.bottom + 20))
         screen.blit(pin_text, (50 + forgot_pin_text.get_width(), textbox2_rect.bottom + 20))
 
