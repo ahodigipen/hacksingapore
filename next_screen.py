@@ -41,7 +41,7 @@ account1_values = [69, 10, 90, 180]
 account2_values = [100, 200, 50, 75]
 
 # NAV account values put here @hidayat
-acount_balance = [6000, 3654]  # optimized and not optimized
+account_balance = [6000, 3654]  # optimized and not optimized
 
 values = account1_values
 
@@ -49,7 +49,6 @@ values = account1_values
 dropdown_open = False
 
 textbox1_rect = pygame.Rect(config.SCREEN_WIDTH / 2 - 35, config.SCREEN_HEIGHT / 2 - 180, TEXTBOX_WIDTH, TEXTBOX_HEIGHT)
-
 
 # Calculate total amount // returns total amount (use as total = calculate_total(array))
 def calculate_total(array):
@@ -94,45 +93,6 @@ def draw_balance_circle(screen, center, radius, color, outline_color, outline_th
     pygame.draw.circle(screen, outline_color, center, inner_circle_radius + outline_thickness, outline_thickness)
     # Draw inner circle to create the donut effect
     pygame.draw.circle(screen, WHITE, center, inner_circle_radius)
-
-# Function to draw the back button
-# def draw_back_button(screen):
-#     pygame.draw.polygon(screen, GRAY, [(10, 20), (30, 10), (30, 30)])
-#     pygame.draw.line(screen, GRAY, (50, 20), (30, 20), 5)
-
-# Function to check if the back button was clicked
-# def check_back_button_click(pos):
-#     return 10 <= pos[0] <= 30 and 10 <= pos[1] <= 30
-
-# Function to draw the dropdown
-# def draw_dropdown(screen, dropdown_rect, dropdown_open, options):
-#     # Draw the dropdown button
-#     pygame.draw.rect(screen, LIGHT_GRAY, dropdown_rect)
-#     text = pygame.font.SysFont(None, 36).render("Balances", True, BLACK)
-#     screen.blit(text, text.get_rect(center=dropdown_rect.center))
-
-#     # If the dropdown is open, draw the options
-#     if dropdown_open:
-#         for i, option in enumerate(options):
-#             option_rect = pygame.Rect(dropdown_rect.x, dropdown_rect.y + (i + 1) * dropdown_rect.height, dropdown_rect.width, dropdown_rect.height)
-#             pygame.draw.rect(screen, LIGHT_GRAY, option_rect)
-#             option_text = pygame.font.SysFont(None, 36).render(option, True, BLACK)
-#             screen.blit(option_text, option_text.get_rect(center=option_rect.center))
-
-# Function to check if the dropdown or its options were clicked
-# def check_dropdown_click(pos, dropdown_rect, dropdown_open, options):
-#     # Check if the main dropdown button was clicked
-#     if dropdown_rect.collidepoint(pos):
-#         return "toggle"
-
-#     # Check if any of the options were clicked
-#     if dropdown_open:
-#         for i, option in enumerate(options):
-#             option_rect = pygame.Rect(dropdown_rect.x, dropdown_rect.y + (i + 1) * dropdown_rect.height, dropdown_rect.width, dropdown_rect.height)
-#             if option_rect.collidepoint(pos):
-#                 return option
-
-#     return None
 
 # Function to draw the "For You" and "Create" boxes
 def draw_boxes(screen):
@@ -192,7 +152,6 @@ def draw_navigation_bar(screen, tab_rects, tab_texts, active_tab):
 def main():
     global values, show_expenditure
 
-
     center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 3)
     radius = 100
     dropdown_rect = pygame.Rect(center[0] - 100, 10, 200, 50)  # Centered at the top middle
@@ -204,6 +163,7 @@ def main():
     global dropdown_open
     animation_progress = 0
     show_expenditure = True  # Flag to toggle between expenditure and balance
+    expenditure_animation_played = False  # Flag to check if the animation has already played
 
     # Define tab properties
     tab_height = 50
@@ -227,7 +187,6 @@ def main():
 
     while running:
         for event in pygame.event.get():
-            print(active_tab)
             if event.type == pygame.QUIT:
                 running = False
 
@@ -235,9 +194,12 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for i, rect in enumerate(tab_rects):
                     if rect.collidepoint(event.pos):
-                        active_tab = i
-                        show_expenditure = (active_tab == 0)
-                        animated = (active_tab == 0)  # Start animation if switching to expenditure
+                        if active_tab != i:
+                            active_tab = i
+                            show_expenditure = (active_tab == 1)
+                            expenditure_animation_played = False  # Reset animation flag when switching tabs
+                            animation_progress = 0  # Reset animation progress when switching tabs
+                            animated = (active_tab == 1)  # Start animation if switching to expenditure
                 # Handle box clicks
                 if box1_rect.collidepoint(event.pos):
                     import for_you
@@ -248,11 +210,12 @@ def main():
         # Draw navigation bar
         draw_navigation_bar(screen, tab_rects, tab_texts, active_tab)
 
-        if not show_expenditure:
+        if show_expenditure:
             # Draw expenditure section
-            if animated:
+            if animated and not expenditure_animation_played:
                 if animation_progress >= 360:
                     animated = False
+                    expenditure_animation_played = True  # Mark the animation as played
                 else:
                     animation_progress += 1.2
                 draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2, animation_progress)
@@ -267,15 +230,10 @@ def main():
         draw_warning_text(screen)
         draw_boxes(screen)
 
-        
-
-
         pygame.display.flip()
 
     pygame.quit()
     sys.exit()
 
-
 if __name__ == "__main__":
     main()
-
