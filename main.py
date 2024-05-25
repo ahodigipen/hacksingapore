@@ -129,7 +129,6 @@ def main():
                         active_textbox = "textbox1"
 
                 elif event.key == pygame.K_RETURN:
-                    if button_rect.collidepoint(pygame.mouse.get_pos()):
                         # Authenticate the user
                         if authenticate(textbox1_text, textbox2_text):
                             # Authentication successful, go to next screen
@@ -137,6 +136,7 @@ def main():
                             next_screen.main()
                         else:
                             # Authentication failed, reset textboxes and display prompt
+                            
                             textbox1_text = ""
                             textbox2_text = ""
                             prompt_text = prompt_font.render("Username or Password is incorrect! Please try again!", True, RED)
