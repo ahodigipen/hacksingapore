@@ -18,13 +18,23 @@ LIGHT_GRAY = (211, 211, 211)
 PINK = (255, 192, 203)
 COLORS = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), PINK]
 
-# Pie chart values for two accounts
+# Pie chart values for two accounts // hard coded values for now
 account1_values = [69, 10, 90, 180, 30]
 account2_values = [100, 200, 50, 75, 125]
+
+#NAV account values put here @hidayat
+acount_balance = [6000, 3654]  #optimized and not optimized
+
 values = account1_values
 
 # Dropdown button state
 dropdown_open = False
+
+#calculate total amount // returns total amount (use as total = calculate_total(array))
+def calculate_total(array):
+    for elements in array:
+        total += elements
+    return total
 
 # Function to draw the pie chart
 def draw_pie_chart(values, screen, colors, center, radius, outline_color, outline_thickness, scroll_offset=0, animation_progress=None):
@@ -196,7 +206,7 @@ def main():
             if animation_progress >= 360:
                 animated = False
             else:
-                animation_progress += 2
+                animation_progress += 1.2
             draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2, scroll_offset, animation_progress)
         else:
             draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2, scroll_offset)
