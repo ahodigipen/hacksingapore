@@ -1,6 +1,7 @@
 import pygame
 import sys
 import config
+import auth
 
 # Initialize Pygame
 pygame.init()
@@ -35,11 +36,13 @@ def main():
 
         screen.fill(WHITE)
         font = pygame.font.SysFont(None, 48)
-        text = font.render("For You Page", True, BLACK)
-        screen.blit(text, text.get_rect(center=(config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2)))
-
+      
         draw_back_button(screen)
-
+        user = auth.authenticated_user 
+        print(user)
+        if user:
+            text = font.render(f"Welcome, {user['full_name']}!", True, BLACK)
+            screen.blit(text, text.get_rect(center=(config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 7)))
         pygame.display.flip()
 
     pygame.quit()
