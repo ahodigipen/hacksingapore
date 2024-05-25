@@ -131,10 +131,15 @@ def main():
                 if action == "toggle":
                     dropdown_open = not dropdown_open
                 elif action == "Account 1":
-                    values = account1_values
+                    if values != account1_values:
+                        animated = True
+                        values = account1_values
                     dropdown_open = False
+                    
                 elif action == "Account 2":
-                    values = account2_values
+                    if values != account2_values:
+                        animated = True
+                        values = account2_values
                     dropdown_open = False
 
             if event.type == pygame.MOUSEWHEEL:
