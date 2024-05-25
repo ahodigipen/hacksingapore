@@ -28,6 +28,8 @@ dropdown_open = False
 
 # Function to draw the pie chart
 def draw_pie_chart(values, screen, colors, center, radius, animated=False, scroll_offset=0):
+    
+    inner_circle_radius = 70/100 * radius
     total_value = sum(values)
     start_angle = 0
     for i, value in enumerate(values):
@@ -40,13 +42,22 @@ def draw_pie_chart(values, screen, colors, center, radius, animated=False, scrol
                 current_end_angle += 2
                 pygame.draw.arc(screen, colors[i], (center[0] - radius, center[1] - radius + scroll_offset, radius * 2, radius * 2),
                                math.radians(start_angle), math.radians(current_end_angle), radius)
+                
+                
+                pygame.draw.circle(screen, WHITE, (center[0], center[1] + scroll_offset), inner_circle_radius)
+                
                 pygame.display.flip()
                 pygame.time.delay(5)
             start_angle = end_angle
         else:
             pygame.draw.arc(screen, colors[i], (center[0] - radius, center[1] - radius + scroll_offset, radius * 2, radius * 2),
                            math.radians(start_angle), math.radians(end_angle), radius)
+            
+            pygame.draw.circle(screen, WHITE, (center[0], center[1] + scroll_offset), inner_circle_radius)
             start_angle = end_angle
+
+    # Draw smaller circle in the middle of the pie chart
+    
 
 def draw_back_button(screen):
     pygame.draw.polygon(screen, GRAY, [(10, 20), (30, 10), (30, 30)])
@@ -93,7 +104,7 @@ def main():
     global values
 
     center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2)
-    radius = 200
+    radius = 150
     scroll_offset = 0  # Initial scroll offset
     scroll_speed = 10  # Scroll speed in pixels
     dropdown_rect = pygame.Rect(center[0] - 100, 10, 200, 50)  # Centered at the top middle
@@ -131,21 +142,14 @@ def main():
                 if action == "toggle":
                     dropdown_open = not dropdown_open
                 elif action == "Account 1":
-                    if values != account1_values:
-                        animated = True
-                        values = account1_values
+                    values = account1_values
                     dropdown_open = False
-                    
                 elif action == "Account 2":
-                    if values != account2_values:
-                        animated = True
-                        values = account2_values
+                    values = account2_values
                     dropdown_open = False
 
             if event.type == pygame.MOUSEWHEEL:
-                new_scroll_offset = scroll_offset + event.y * scroll_speed
-                # Ensure the new scroll offset doesn't go below zero
-                scroll_offset = min(new_scroll_offset, 0)
+                scroll_offset += event.y * scroll_speed
 
         screen.fill(WHITE)
 
