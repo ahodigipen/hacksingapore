@@ -58,9 +58,6 @@ def draw_pie_chart(values, screen, colors, center, radius, outline_color, outlin
             pygame.draw.circle(screen, WHITE, (center[0], center[1] + scroll_offset), inner_circle_radius)
             start_angle = end_angle
 
-    
-    
-
 def draw_back_button(screen):
     pygame.draw.polygon(screen, GRAY, [(10, 20), (30, 10), (30, 30)])
     pygame.draw.line(screen, GRAY, (50, 20), (30, 20), 5)
@@ -101,6 +98,29 @@ def check_dropdown_click(pos, dropdown_rect, dropdown_open, options, scroll_offs
                 return option
 
     return None
+
+def draw_boxes(screen, scroll_offset):
+    # Define box dimensions
+    box_width = 200
+    box_height = 100
+    spacing = 50
+
+    # Calculate positions
+    box1_rect = pygame.Rect(config.SCREEN_WIDTH // 2 - box_width - spacing // 2, config.SCREEN_HEIGHT - box_height - 50 + scroll_offset, box_width, box_height)
+    box2_rect = pygame.Rect(config.SCREEN_WIDTH // 2 + spacing // 2, config.SCREEN_HEIGHT - box_height - 50 + scroll_offset, box_width, box_height)
+
+    # Draw boxes
+    pygame.draw.rect(screen, LIGHT_GRAY, box1_rect)
+    pygame.draw.rect(screen, LIGHT_GRAY, box2_rect)
+
+    # Add labels
+    font = pygame.font.SysFont(None, 36)
+    label1 = font.render("For You", True, BLACK)
+    label2 = font.render("Create", True, BLACK)
+    screen.blit(label1, label1.get_rect(center=box1_rect.center))
+    screen.blit(label2, label2.get_rect(center=box2_rect.center))
+
+    return box1_rect, box2_rect
 
 def main():
     global values
@@ -154,6 +174,16 @@ def main():
                         values = account2_values
                     dropdown_open = False
 
+                box1_rect, box2_rect = draw_boxes(screen, scroll_offset)
+                if box1_rect.collidepoint(event.pos):
+                    import for_you
+                    for_you.main()
+                    running = False
+                elif box2_rect.collidepoint(event.pos):
+                    import create
+                    create.main()
+                    running = False
+
             if event.type == pygame.MOUSEWHEEL:
                 # Calculate the new scroll offset
                 new_scroll_offset = scroll_offset + event.y * scroll_speed
@@ -181,6 +211,9 @@ def main():
 
         # Draw dropdown (moves with scroll offset)
         draw_dropdown(screen, dropdown_rect, dropdown_open, options, scroll_offset)
+
+        # Draw "For You" and "Create" boxes
+        draw_boxes(screen, scroll_offset)
 
         pygame.display.flip()
 
