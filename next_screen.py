@@ -1,14 +1,13 @@
 import pygame
 import sys
 import math
+import config
 
 # Initialize Pygame
 pygame.init()
 
 # Set up the display
-screen_width = 450
-screen_height = 900
-screen = pygame.display.set_mode((screen_width, screen_height))
+screen = config.screen
 pygame.display.set_caption("Animated Pie Chart")
 
 # Define colors
@@ -50,7 +49,7 @@ def check_back_button_click(pos):
     return 10 <= pos[0] <= 30 and 10 <= pos[1] <= 30
 
 def main():
-    center = (screen_width // 2, screen_height // 2)
+    center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2)
     radius = 200
 
     running = True
