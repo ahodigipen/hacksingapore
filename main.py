@@ -82,7 +82,7 @@ def main():
                         # Authentication successful, go to next screen
                         import next_screen
                         next_screen.main()
-                        running = False
+                        #running = False
                     else:
                         # Authentication failed, reset textboxes and display prompt
                         textbox1_text = ""

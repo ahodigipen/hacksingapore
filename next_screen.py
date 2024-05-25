@@ -27,8 +27,8 @@ values = account1_values
 dropdown_open = False
 
 # Function to draw the pie chart
-def draw_pie_chart(values, screen, colors, center, radius, outline_color, outline_thickness, animated=False, scroll_offset=0):
-    inner_circle_radius = 70/100 * radius
+def draw_pie_chart(values, screen, colors, center, radius, outline_color, outline_thickness, scroll_offset=0, animation_progress=None):
+    inner_circle_radius = int(0.7 * radius)
     total_value = sum(values)
     start_angle = 0
 
@@ -39,24 +39,16 @@ def draw_pie_chart(values, screen, colors, center, radius, outline_color, outlin
         angle = (value / total_value) * 360
         end_angle = start_angle + angle
 
-        if animated:
-            current_end_angle = start_angle
-            while current_end_angle < end_angle:
-                current_end_angle += 2
-                pygame.draw.arc(screen, colors[i], (center[0] - radius, center[1] - radius + scroll_offset, radius * 2, radius * 2),
-                               math.radians(start_angle), math.radians(current_end_angle), radius)
-                
-                pygame.draw.circle(screen, WHITE, (center[0], center[1] + scroll_offset), inner_circle_radius)
-                
-                pygame.display.flip()
-                pygame.time.delay(5)
-            start_angle = end_angle
-        else:
-            pygame.draw.arc(screen, colors[i], (center[0] - radius, center[1] - radius + scroll_offset, radius * 2, radius * 2),
-                           math.radians(start_angle), math.radians(end_angle), radius)
-            
-            pygame.draw.circle(screen, WHITE, (center[0], center[1] + scroll_offset), inner_circle_radius)
-            start_angle = end_angle
+        if animation_progress is not None and animation_progress < end_angle:
+            end_angle = animation_progress
+
+        pygame.draw.arc(screen, colors[i], (center[0] - radius, center[1] - radius + scroll_offset, radius * 2, radius * 2),
+                        math.radians(start_angle), math.radians(end_angle), radius)
+
+        start_angle = end_angle
+
+    # Draw inner circle to create the donut effect
+    pygame.draw.circle(screen, WHITE, (center[0], center[1] + scroll_offset), inner_circle_radius)
 
 def draw_back_button(screen):
     pygame.draw.polygon(screen, GRAY, [(10, 20), (30, 10), (30, 30)])
@@ -136,6 +128,7 @@ def main():
     animated = True
     selected_index = None
     global dropdown_open
+    animation_progress = 0
 
     while running:
         for event in pygame.event.get():
@@ -146,6 +139,7 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:  # Reset animation
                     animated = True
+                    animation_progress = 0
                 if event.key == pygame.K_UP and selected_index is not None:
                     values[selected_index] += 10
                 if event.key == pygame.K_DOWN and selected_index is not None:
@@ -167,10 +161,12 @@ def main():
                     if values != account1_values:
                         values = account1_values
                         animated = True
+                        animation_progress = 0
                     dropdown_open = False
                 elif action == "Account 2":
                     if values != account2_values:
                         animated = True
+                        animation_progress = 0
                         values = account2_values
                     dropdown_open = False
 
@@ -194,10 +190,13 @@ def main():
         screen.fill(WHITE)
 
         if animated:
-            draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2)
-            animated = False
+            if animation_progress >= 360:
+                animated = False
+            else:
+                animation_progress += 2
+            draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2, scroll_offset, animation_progress)
         else:
-            draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2)
+            draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2, scroll_offset)
 
         # Draw value text 
         for i, value in enumerate(values):
