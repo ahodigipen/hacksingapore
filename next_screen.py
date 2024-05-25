@@ -143,7 +143,9 @@ def main():
                     dropdown_open = False
 
             if event.type == pygame.MOUSEWHEEL:
-                scroll_offset += event.y * scroll_speed
+                new_scroll_offset = scroll_offset + event.y * scroll_speed
+                # Ensure the new scroll offset doesn't go below zero
+                scroll_offset = min(new_scroll_offset, 0)
 
         screen.fill(WHITE)
 
