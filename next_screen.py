@@ -103,8 +103,8 @@ def check_dropdown_click(pos, dropdown_rect, dropdown_open, options, scroll_offs
 def main():
     global values
 
-    center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2)
-    radius = 150
+    center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 3)
+    radius = 100
     scroll_offset = 0  # Initial scroll offset
     scroll_speed = 10  # Scroll speed in pixels
     dropdown_rect = pygame.Rect(center[0] - 100, 10, 200, 50)  # Centered at the top middle
@@ -149,7 +149,11 @@ def main():
                     dropdown_open = False
 
             if event.type == pygame.MOUSEWHEEL:
-                scroll_offset += event.y * scroll_speed
+                # Calculate the new scroll offset
+                new_scroll_offset = scroll_offset + event.y * scroll_speed
+
+                # Ensure the new scroll offset doesn't go above zero
+                scroll_offset = min(new_scroll_offset, 0)
 
         screen.fill(WHITE)
 
