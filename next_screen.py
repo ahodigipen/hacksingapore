@@ -133,7 +133,7 @@ def draw_balance_circle(screen, center, radius, color, outline_color, outline_th
 
 #     return None
 
-# Function to draw the "For You" and "Create" boxes
+# Function to draw the "Your Plan"
 def draw_boxes(screen):
     # Define box dimensions
     box_width = 200
@@ -141,22 +141,17 @@ def draw_boxes(screen):
     spacing = 50
 
     # Calculate positions
-    box1_rect = pygame.Rect(config.SCREEN_WIDTH // 2 - box_width - spacing // 2, config.SCREEN_HEIGHT - box_height - 100, box_width, box_height)
-    box2_rect = pygame.Rect(config.SCREEN_WIDTH // 2 + spacing // 2, config.SCREEN_HEIGHT - box_height - 100, box_width, box_height)
+    box1_rect = pygame.Rect(config.SCREEN_WIDTH - box_width - spacing * 2 , config.SCREEN_HEIGHT - box_height - 100, box_width, box_height)
 
     # Draw boxes
     pygame.draw.rect(screen, LIGHT_GRAY, box1_rect)
-    pygame.draw.rect(screen, LIGHT_GRAY, box2_rect)
 
     # Add labels
     font = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE)
-    label1 = font.render("For You", True, BLACK)
-    label2 = font.render("Create", True, BLACK)
+    label1 = font.render("Your Plan", True, BLACK)
     screen.blit(label1, label1.get_rect(center=box1_rect.center))
-    screen.blit(label2, label2.get_rect(center=box2_rect.center))
 
-    return box1_rect, box2_rect
-
+    return box1_rect 
 # Function to draw the warning text
 def draw_warning_text(screen):
     font = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE)
