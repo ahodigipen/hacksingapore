@@ -130,6 +130,11 @@ def draw_plan_button(screen, rect, hover=False):
     label = font.render("Your Plan", True, WHITE)
     screen.blit(label, label.get_rect(center=rect.center))
 
+def draw_text(screen, text, font, color, center):
+    text_surface = font.render(text, True, color)
+    text_rect = text_surface.get_rect(center=center)
+    screen.blit(text_surface, text_rect)
+
 def main():
     global values, show_expenditure
 
@@ -177,6 +182,8 @@ def main():
         draw_navigation_bar(screen, tab_rects, tab_texts, active_tab)
 
         if show_expenditure:
+            # Draw the "Spendings this month:" text above the pie chart
+            draw_text(screen, "Spendings this month:", pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE), DARK_RED, (center[0], center[1] - radius - 20))
             if animated and not expenditure_animation_played:
                 if animation_progress >= 360:
                     animated = False
