@@ -172,7 +172,6 @@ def main():
     # Set background image
     screen.fill(OFF_WHITE)
 
-
     center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 3)
     radius = 100
     dropdown_rect = pygame.Rect(center[0] - 100, 10, 200, 50)  # Centered at the top middle
@@ -241,6 +240,10 @@ def main():
                 draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2, animation_progress)
             else:
                 draw_pie_chart(values, screen, COLORS, center, radius, BLACK, 2)
+            # Display total expenditure
+            total_expenditure = calculate_total(values)
+            total_text = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE).render(f"{total_expenditure}", True, DARK_GRAY)
+            screen.blit(total_text, (textbox1_rect.x + TEXTBOX_PADDING, textbox1_rect.y + TEXTBOX_HEIGHT // 2 + TEXTBOX_FONT_SIZE // 2))
         else:
             # Draw savings section
             if animated and not balance_animation_played:
@@ -252,8 +255,12 @@ def main():
                 draw_balance_circle(screen, center, radius, GREEN, BLACK, 2, animation_progress)
             else:
                 draw_balance_circle(screen, center, radius, GREEN, BLACK, 2)
+            # Display total balance
+            total_balance = calculate_total(account_balance)
+            total_text = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE).render(f"{total_balance}", True, DARK_GRAY)
+            screen.blit(total_text, (textbox1_rect.x + TEXTBOX_PADDING, textbox1_rect.y + TEXTBOX_HEIGHT // 2 + TEXTBOX_FONT_SIZE // 2))
 
-        textbox1_surface = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE).render("Total", True, DARK_GRAY)
+        textbox1_surface = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE).render("Total:", True, DARK_GRAY)
         screen.blit(textbox1_surface, (textbox1_rect.x + TEXTBOX_PADDING, textbox1_rect.y + TEXTBOX_HEIGHT // 2 - TEXTBOX_FONT_SIZE // 2))
         draw_warning_text(screen)
         draw_boxes(screen)
