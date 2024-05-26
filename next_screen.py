@@ -204,8 +204,7 @@ def main():
     box_width = 200
     box_height = 100
     spacing = 50
-    box1_rect = pygame.Rect(config.SCREEN_WIDTH // 2 - box_width - spacing // 2, config.SCREEN_HEIGHT - box_height - 100, box_width, box_height)
-    box2_rect = pygame.Rect(config.SCREEN_WIDTH // 2 + spacing // 2, config.SCREEN_HEIGHT - box_height - 100, box_width, box_height)
+    box1_rect = pygame.Rect(config.SCREEN_WIDTH // 2 - 20, config.SCREEN_HEIGHT - box_height - 100, box_width, box_height)
 
     while running:
         for event in pygame.event.get():

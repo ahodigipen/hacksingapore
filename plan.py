@@ -19,7 +19,7 @@ def show_investment_options():
     pygame.display.set_caption("Investment Options")
 
     # Display investment options
-    font = pygame.font.Font(Styles.DEFAULT_FONT, Styles.BUTTON_FONT_SIZE)
+    font = pygame.font.Font(Styles.DEFAULT_FONT, Styles.TITLE_FONT_SIZE)
     running = True
 
     while running:
@@ -39,13 +39,17 @@ def show_investment_options():
 
             # Draw options for this risk tier
             for option in options:
-                text = font.render(option, True, Styles.BLACK)
-                text_rect = text.get_rect(center=(config.SCREEN_WIDTH // 2, y_offset))
-                screen.blit(text, text_rect)
-                y_offset += 30
+                # Draw text box for each option
+                text_box_rect = pygame.Rect(15, y_offset, 400, 100)  # Adjust position and size as needed
+                pygame.draw.rect(screen, Styles.LIGHT_GRAY, text_box_rect, border_radius=5)
 
-            # Add some space between sections
-            y_offset += 50
+                # Render text for the option
+                option_text = font.render(option, True, Styles.BLACK)
+                option_text_rect = option_text.get_rect(center=(text_box_rect.centerx, text_box_rect.centery))
+                screen.blit(option_text, option_text_rect)
+
+                # Increment y_offset for the next text box
+                y_offset += 150  # Increase this value to add more space between text boxes
 
         pygame.display.flip()
 
