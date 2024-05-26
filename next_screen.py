@@ -34,6 +34,9 @@ TEXTBOX_WIDTH = 100
 TEXTBOX_HEIGHT = 40
 BUTTON_WIDTH = 300
 BUTTON_HEIGHT = 60
+ICON_BUTTON_WIDTH = 80
+ICON_BUTTON_HEIGHT = 80
+ICON_BUTTON_PADDING = 20
 
 # Pie chart values for two accounts
 account1_values = [69, 10, 90, 180]
@@ -118,8 +121,8 @@ def draw_navigation_bar(screen, tab_rects, tab_texts, active_tab):
 def draw_red_line_separator(screen):
     line_width = 4
     line_length = int(config.SCREEN_WIDTH * 0.8)
-    line_start_pos = (config.SCREEN_WIDTH // 2 - line_length // 2, config.SCREEN_HEIGHT // 2 + 45)
-    line_end_pos = (config.SCREEN_WIDTH // 2 + line_length // 2, config.SCREEN_HEIGHT // 2 + 45)
+    line_start_pos = (config.SCREEN_WIDTH // 2 - line_length // 2, config.SCREEN_HEIGHT // 2 + 245)
+    line_end_pos = (config.SCREEN_WIDTH // 2 + line_length // 2, config.SCREEN_HEIGHT // 2 + 245)
     pygame.draw.line(screen, DARK_RED, line_start_pos, line_end_pos, line_width)
 
 def draw_plan_button(screen, rect, hover=False):
@@ -130,12 +133,20 @@ def draw_plan_button(screen, rect, hover=False):
     label = font.render("Your Plan", True, WHITE)
     screen.blit(label, label.get_rect(center=rect.center))
 
+def draw_icon_button(screen, rect, text, hover=False):
+    color = BUTTON_HOVER_COLOR if hover else BUTTON_COLOR
+    pygame.draw.rect(screen, color, rect)
+    pygame.draw.rect(screen, DARK_RED, rect, 2)
+    font = pygame.font.Font(DEFAULT_FONT, TEXTBOX_FONT_SIZE)
+    label = font.render(text, True, WHITE)
+    screen.blit(label, label.get_rect(center=rect.center))
+
 def main():
     global values, show_expenditure
 
+    center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 3)
     screen.fill(OFF_WHITE)
 
-    center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 3)
     radius = 100
     running = True
     animated = True
@@ -151,9 +162,17 @@ def main():
     tab_texts = ["Savings", "Expenditure"]
     active_tab = 0
 
+    icon_button_rects = [
+        pygame.Rect(center[0] - 2 * ICON_BUTTON_WIDTH - 1.5 * ICON_BUTTON_PADDING, center[1] + radius + 30, ICON_BUTTON_WIDTH, ICON_BUTTON_HEIGHT),
+        pygame.Rect(center[0] - 1 * ICON_BUTTON_WIDTH - 0.5 * ICON_BUTTON_PADDING, center[1] + radius + 30, ICON_BUTTON_WIDTH, ICON_BUTTON_HEIGHT),
+        pygame.Rect(center[0] + 0.25 * ICON_BUTTON_WIDTH - 0.5 * ICON_BUTTON_PADDING, center[1] + radius + 30, ICON_BUTTON_WIDTH, ICON_BUTTON_HEIGHT),
+        pygame.Rect(center[0] + 1 * ICON_BUTTON_WIDTH + 1.5 * ICON_BUTTON_PADDING, center[1] + radius + 30, ICON_BUTTON_WIDTH, ICON_BUTTON_HEIGHT)
+    ]
+
     while running:
         mouse_pos = pygame.mouse.get_pos()
-        hover = button_rect.collidepoint(mouse_pos)
+        hover_plan = button_rect.collidepoint(mouse_pos)
+        hover_icons = [rect.collidepoint(mouse_pos) for rect in icon_button_rects]
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -172,6 +191,9 @@ def main():
                 if button_rect.collidepoint(event.pos):
                     import for_you
                     for_you.main()
+                for i, rect in enumerate(icon_button_rects):
+                    if rect.collidepoint(event.pos):
+                        print(f"Icon button {i+1} clicked")
 
         screen.fill(OFF_WHITE)
         draw_navigation_bar(screen, tab_rects, tab_texts, active_tab)
@@ -210,7 +232,11 @@ def main():
 
         draw_warning_text(screen)
         draw_red_line_separator(screen)
-        draw_plan_button(screen, button_rect, hover)
+        draw_plan_button(screen, button_rect, hover_plan)
+        
+        icon_texts = ["Icon1", "Icon2", "Icon3", "Icon4"]
+        for i, rect in enumerate(icon_button_rects):
+            draw_icon_button(screen, rect, icon_texts[i], hover_icons[i])
 
         pygame.display.flip()
 
